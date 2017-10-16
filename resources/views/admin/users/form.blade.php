@@ -4,12 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+
                 <div class="panel panel-default">
                     @if(empty($user))
                         <div class="panel-heading">Create new user</div>
                     @else
                         <div class="panel-heading">Edit user</div>
                     @endif
+
                     <div class="panel-body">
                         <form action="@if(empty($user)){{ route('users.store') }}@else{{ route('users.update', $user->id) }}@endif" method="POST">
                             {{ csrf_field() }}
@@ -32,6 +34,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

@@ -12,7 +12,52 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 100;
+            margin: 0;
+        }
+
+        body {
+            position: relative;
+            padding: 70px;
+        }
+
+        ul.nav-pills {
+            top: 70px;
+            position: fixed;
+        }
+
+        nav.navbar-static-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .links > a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        /*.content {*/
+            /*position: relative;*/
+            /*top: 70px;*/
+        /*}*/
+    </style>
 </head>
+{{--<body data-spy="scroll" data-target="#myScrollspy" data-offset="370">--}}
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
@@ -29,7 +74,8 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        Home
+{{--                        {{ config('app.name', 'Laravel') }}--}}
                     </a>
                 </div>
 
@@ -42,6 +88,14 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ route('users.index') }}">All</a></li>
                                     <li><a href="{{ route('users.create') }}">Create</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('home') }}">All</a></li>
+                                    <li><a href="{{ route('categories.create') }}">Create</a></li>
                                 </ul>
                             </li>
                         </ul>

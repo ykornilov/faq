@@ -11,13 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::post('questions.store', 'QuestionsController@store')->name('questions.store');
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/home', 'HomeController@index')->name('home');
+//    Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('users', 'UsersController');
+    Route::resource('categories', 'CategoriesController');
+    Route::resource('questions', 'QuestionsController');
 });
+
+Route::get('/{id?}', 'PagesController@index')->name('home');
