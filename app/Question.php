@@ -14,6 +14,7 @@ class Question extends Model
     protected $fillable = [
         'question',
         'answer',
+        'is_published',
         'category_id',
         'author_id'
     ];

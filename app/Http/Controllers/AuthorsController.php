@@ -57,7 +57,7 @@ class AuthorsController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        return view('admin.authors.form', compact('author'));
     }
 
     /**
@@ -69,7 +69,15 @@ class AuthorsController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|min:1|max:191',
+            'email' => 'required|string|email'
+        ]);
+
+        $author->update($request->all());
+
+        return redirect()->route('home');
+
     }
 
     /**

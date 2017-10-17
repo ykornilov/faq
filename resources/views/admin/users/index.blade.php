@@ -28,7 +28,7 @@
                                                 <a type="button" class="btn btn-default" href="{{ route('users.edit', $user->id) }}">edit</a>
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger">delete</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

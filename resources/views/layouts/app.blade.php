@@ -55,6 +55,13 @@
             /*position: relative;*/
             /*top: 70px;*/
         /*}*/
+        .inline-form {
+            display: inline-block;
+        }
+        .inline-form .inline-element {
+            display: inline-block;
+            width: auto;
+        }
     </style>
 </head>
 {{--<body data-spy="scroll" data-target="#myScrollspy" data-offset="370">--}}
@@ -74,8 +81,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        Home
-{{--                        {{ config('app.name', 'Laravel') }}--}}
+                        {{ config('app.name', 'FAQ') }}
                     </a>
                 </div>
 

@@ -2,19 +2,11 @@
     <div class="col-md-8 col-md-offset-2">
 
         <div class="panel panel-default">
-            @if(empty($question))
-                <div class="panel-heading">Create new question</div>
-            @else
-                <div class="panel-heading">Edit question</div>
-            @endif
+            <div class="panel-heading">Create new question</div>
 
             <div class="panel-body">
-                <form action="@if(empty($question)){{ route('questions.store') }}@else{{ route('questions.update', $question->id) }}@endif" method="POST">
+                <form action="{{ route('questions.store') }}" method="POST">
                     {{ csrf_field() }}
-
-                    @isset($question)
-                        {{ method_field('PUT') }}
-                    @endisset
 
                     @include('fields.text', ['field' => 'name', 'name' => 'Your name'])
                     @include('fields.text', ['field' => 'email', 'name' => 'Your email'])

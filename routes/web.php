@@ -15,15 +15,15 @@
 //    return view('welcome');
 //});
 
-Route::post('questions.store', 'QuestionsController@store')->name('questions.store');
+Route::resource('questions', 'QuestionsController', [ 'only' => ['store']]);
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
-//    Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('users', 'UsersController');
     Route::resource('categories', 'CategoriesController');
-    Route::resource('questions', 'QuestionsController');
+    Route::resource('authors', 'AuthorsController');
+    Route::resource('questions', 'QuestionsController', [ 'except' => ['store']]);
 });
 
 Route::get('/{id?}', 'PagesController@index')->name('home');
