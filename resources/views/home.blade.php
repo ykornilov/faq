@@ -5,15 +5,6 @@
 
     @if($categories->count() > 0)
         <div class="row">
-            {{--<nav class="col-md-4" id="myScrollspy">--}}
-
-                {{--<ul class="nav nav-pills nav-stacked">--}}
-                    {{--<li class="active"><a href="#section1">Section 1</a></li>--}}
-                    {{--<li><a href="#section2">Section 2</a></li>--}}
-                    {{--<li><a href="#section3">Section 3</a></li>--}}
-                {{--</ul>--}}
-
-            {{--</nav>--}}
 
             <div class="col-md-4">
 
@@ -21,6 +12,11 @@
                     @foreach($categories as $category)
                         <a href="{{ route('home', $category->id) }}" class="list-group-item @if($activeCategory && $activeCategory->id === $category->id){{  'active' }}@endif">
                             {{ $category->title }}
+                            @auth
+                                <span class="badge badge-danger" data-toggle="tooltip" title="Questons without answer">{{ $category->questionsWithoutAnswers }}</span>
+                                <span class="badge badge-warning" data-toggle="tooltip" title="Unpublished questions">{{ $category->questionsUnpublished }}</span>
+                                <span class="badge" data-toggle="tooltip" title="Questions">{{ $category->questions->count() }}</span>
+                            @endauth
                         </a>
                     @endforeach
                 </div>
@@ -116,6 +112,17 @@
 
                     </div>
                 @endif
+
+                @auth
+                    @if($activeCategory)
+                        <form action="{{ route('categories.destroy', $activeCategory->id) }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger">Delete category</button>
+                        </form>
+                    @endif
+                @endauth
+
             </div>
 
         </div>

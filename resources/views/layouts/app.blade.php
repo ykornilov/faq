@@ -62,6 +62,23 @@
             display: inline-block;
             width: auto;
         }
+
+        .list-group-item.active>.badge-warning {
+            color: #ffc107;
+        }
+
+        .list-group-item.active>.badge-danger {
+            color: #dc3545;
+        }
+
+        .list-group-item>.badge-warning {
+            color: #111;
+            background-color: #ffc107;
+        }
+
+        .list-group-item>.badge-danger {
+            background-color: #dc3545;
+        }
     </style>
 </head>
 {{--<body data-spy="scroll" data-target="#myScrollspy" data-offset="370">--}}
@@ -104,6 +121,13 @@
                                     <li><a href="{{ route('categories.create') }}">Create</a></li>
                                 </ul>
                             </li>
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questions <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('questions.index') }}">Without Answer</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     @endauth
 
@@ -143,5 +167,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    {{--<script>--}}
+        {{--$(document).ready(function(){--}}
+            {{--$('[data-toggle="tooltip"]').tooltip();--}}
+        {{--});--}}
+    {{--</script>--}}
 </body>
 </html>

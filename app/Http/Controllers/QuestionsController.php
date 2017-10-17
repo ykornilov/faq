@@ -16,7 +16,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::where('answer', NULL)->orderBy('created_at', 'desc')->get();
+        return view('admin.questions.index', compact('questions'));
     }
 
     /**
@@ -114,7 +115,7 @@ class QuestionsController extends Controller
         $this->validate($request, $validateParams);
         $question->update($updateParams);
 
-        return redirect()->route('home');
+        return redirect()->route('home', $question->category->id);
     }
 
     /**
@@ -126,6 +127,6 @@ class QuestionsController extends Controller
     public function destroy(Question $question)
     {
         $question->delete();
-        return redirect()->route('home');
+        return redirect()->route('home', $question->category->id);
     }
 }

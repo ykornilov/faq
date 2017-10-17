@@ -88,7 +88,7 @@ class CategoriesController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('home', $category->id);
     }
 
     /**
@@ -99,6 +99,7 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->questions()->delete();
         $category->delete();
         return redirect()->route('home');
     }
