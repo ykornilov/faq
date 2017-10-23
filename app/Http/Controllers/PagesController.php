@@ -44,8 +44,6 @@ class PagesController extends Controller
             }
         }
 
-        //dd($questions->count());
-
         return view('home', compact('categories', 'activeCategory'));
     }
 }
