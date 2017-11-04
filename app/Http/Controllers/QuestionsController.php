@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Question;
 use App\Author;
 use Illuminate\Http\Request;
+use MongoDB\Driver\Query;
 
 class QuestionsController extends Controller
 {
@@ -95,28 +96,60 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $validateParams = [];
-        $updateParams = [];
+        $this->validate($request, [
+            'question' => 'required|string|min:5|max:191'
+        ]);
 
-        if (isset($request->update_question)) {
-            $validateParams['question'] = 'required|string|min:5|max:191';
-            $updateParams['question'] = $request->question;
-            $updateParams['answer'] = $request->answer;
-        } elseif (isset($request->publish)) {
-            $updateParams['is_published'] = ($request->publish === 'publish');
-        } elseif (isset($request->category_id)) {
-            $validateParams['category_id'] = 'integer';
-            $updateParams['category_id'] = $request->category_id;
-        } elseif (isset($request->answer)) {
-            $validateParams['answer'] = 'required|string|min:5';
-            $updateParams['answer'] = $request->answer;
-        }
-
-        $this->validate($request, $validateParams);
-        $question->update($updateParams);
+        $question->update($request->all());
 
         return redirect()->route('home', $question->category->id);
     }
+
+    public function publish(Request $request, $id)
+    {
+        $question = Question::where('id', $id)->first();
+
+        $this->validate($request, [
+            'publish' => 'required'
+        ]);
+
+        $question->update([
+            'is_published' => ($request->publish === 'publish')
+        ]);
+
+        return redirect()->route('home', $question->category->id);
+    }
+
+    public function reply(Request $request, $id)
+    {
+        $question = Question::where('id', $id)->first();
+
+        $this->validate($request, [
+            'answer' => 'required|string|min:5'
+        ]);
+
+        $question->update([
+            'answer' => $request->answer
+        ]);
+
+        return redirect()->route('home', $question->category->id);
+    }
+
+    public function changeCategory(Request $request, $id)
+    {
+        $question = Question::where('id', $id)->first();
+
+        $this->validate($request, [
+            'category_id' => 'integer'
+        ]);
+
+        $question->update([
+            'category_id' => $request->category_id
+        ]);
+
+        return redirect()->route('home', $question->category->id);
+    }
+
 
     /**
      * Remove the specified resource from storage.

@@ -17,10 +17,14 @@ Route::resource('questions', 'QuestionsController', [ 'only' => ['store']]);
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('users', 'UsersController');
-    Route::resource('categories', 'CategoriesController');
-    Route::resource('authors', 'AuthorsController');
+    Route::resource('users', 'UsersController', [ 'except' => ['show']]);
+    Route::resource('categories', 'CategoriesController', [ 'except' => ['index', 'show']]);
+    Route::resource('authors', 'AuthorsController', [ 'only' => ['edit', 'update']]);
     Route::resource('questions', 'QuestionsController', [ 'except' => ['store']]);
+
+    Route::put('questions.publish/{id}', 'QuestionsController@publish')->name('questions.publish');
+    Route::put('questions.reply/{id}', 'QuestionsController@reply')->name('questions.reply');
+    Route::put('questions.changeCategory/{id}', 'QuestionsController@changeCategory')->name('questions.changeCategory');
 });
 
 Route::get('/{id?}', 'PagesController@index')->name('home');

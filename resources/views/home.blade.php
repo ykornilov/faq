@@ -13,8 +13,8 @@
                         <a href="{{ route('home', $category->id) }}" class="list-group-item @if($activeCategory && $activeCategory->id === $category->id){{  'active' }}@endif">
                             {{ $category->title }}
                             @auth
-                                <span class="badge badge-danger" data-toggle="tooltip" title="Questons without answer">{{ $category->questionsWithoutAnswers }}</span>
-                                <span class="badge badge-warning" data-toggle="tooltip" title="Unpublished questions">{{ $category->questionsUnpublished }}</span>
+                                <span class="badge badge-danger" data-toggle="tooltip" title="Questons without answer">{{ $category->questions()->whereNull('answer')->get()->count() }}</span>
+                                <span class="badge badge-warning" data-toggle="tooltip" title="Unpublished questions">{{ $category->questions()->where('is_published', false)->get()->count() }}</span>
                                 <span class="badge" data-toggle="tooltip" title="Questions">{{ $category->questions->count() }}</span>
                             @endauth
                         </a>
@@ -47,7 +47,7 @@
 
                                             @auth
                                                 @empty($question->answer)
-                                                    <form action="{{ route('questions.update', $question->id) }}" method="POST">
+                                                    <form action="{{ route('questions.reply', $question->id) }}" method="POST">
                                                         {{ csrf_field() }}
                                                         {{ method_field('PUT') }}
 
@@ -76,7 +76,7 @@
 
                                             @auth
                                                 @if(!empty($question->answer))
-                                                    <form class="inline-form" action="{{ route('questions.update', $question->id) }}" method="POST">
+                                                    <form class="inline-form" action="{{ route('questions.publish', $question->id) }}" method="POST">
                                                         {{ csrf_field() }}
                                                         {{ method_field('PUT') }}
                                                         <button type="submit" name="publish" class="btn btn-primary" value="@if($question->is_published){{ 'unpublish' }}@else{{ 'publish' }}@endif">@if($question->is_published){{ 'Unpublish' }}@else{{ 'Publish' }}@endif</button>
@@ -91,7 +91,7 @@
                                                     </ul>
                                                 </div>
 
-                                                <form class="inline-form" action="{{ route('questions.update', $question->id) }}" method="POST">
+                                                <form class="inline-form" action="{{ route('questions.changeCategory', $question->id) }}" method="POST">
                                                     {{ csrf_field() }}
                                                     {{ method_field('PUT') }}
                                                     @include('fields.select_inline', ['field' => 'category_id', 'options' => $categories])

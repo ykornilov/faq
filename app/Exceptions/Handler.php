@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        HttpException::class
     ];
 
     /**
@@ -48,6 +48,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($this->isHttpException($exception)){
+            if (view()->exists('errors.'.$exception->getStatusCode()))
+            {
+                return response()->view('errors.'.$exception->getStatusCode(), [], $exception->getStatusCode());
+            }
+        } else {
+            // Custom error 500 view on production
+            if (app()->environment() === 'production') {
+                return response()->view('errors.500', [], 500);
+            }
+        }
         return parent::render($request, $exception);
     }
 }
