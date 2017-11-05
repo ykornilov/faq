@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -45,6 +47,8 @@ class UsersController extends Controller
             'login' => $request['login'],
             'password' => bcrypt($request['password']),
         ]);
+
+        Log::info(Auth::user()->login.' создал администратора ('.$request['login'].')');
 
         return redirect()->route('users.index');
     }
@@ -90,6 +94,8 @@ class UsersController extends Controller
             'password' => bcrypt($request['password']),
         ]);
 
+        Log::info(Auth::user()->login.' отредактировал администратора ('.$user->id.')');
+
         return redirect()->route('users.index');
     }
 
@@ -101,6 +107,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        Log::info(Auth::user()->login.' удалил администратора ('.$user->id.')');
         $user->delete();
         return redirect()->route('users.index');
     }

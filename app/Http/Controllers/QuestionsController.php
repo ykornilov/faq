@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Question;
 use App\Author;
 use Illuminate\Http\Request;
-use MongoDB\Driver\Query;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class QuestionsController extends Controller
 {
@@ -102,6 +103,8 @@ class QuestionsController extends Controller
 
         $question->update($request->all());
 
+        Log::info(Auth::user()->login.' отредактировал вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
+
         return redirect()->route('home', $question->category->id);
     }
 
@@ -116,6 +119,8 @@ class QuestionsController extends Controller
         $question->update([
             'is_published' => ($request->publish === 'publish')
         ]);
+
+        Log::info(Auth::user()->login.($request->publish === 'publish' ? ' опубликовал' : ' снял с публикации').'  вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
 
         return redirect()->route('home', $question->category->id);
     }
@@ -132,6 +137,8 @@ class QuestionsController extends Controller
             'answer' => $request->answer
         ]);
 
+        Log::info(Auth::user()->login.' ответил на вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
+
         return redirect()->route('home', $question->category->id);
     }
 
@@ -147,6 +154,8 @@ class QuestionsController extends Controller
             'category_id' => $request->category_id
         ]);
 
+        Log::info(Auth::user()->login.' переместил вопрос ('.$question->id.') в тему "'.$question->category->title.'" ('.$question->category->id.')');
+
         return redirect()->route('home', $question->category->id);
     }
 
@@ -159,6 +168,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        Log::info(Auth::user()->login.' удалил вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
+
         $question->delete();
         return redirect()->route('home', $question->category->id);
     }

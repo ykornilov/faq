@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CategoriesController extends Controller
 {
@@ -44,6 +45,8 @@ class CategoriesController extends Controller
             'title' => $request['title'],
             'user_id' => Auth::id()
         ]);
+
+        Log::info(Auth::user()->login.' создал тему "'.$request['title'].'"');
 
         return redirect()->route('home');
     }
@@ -88,6 +91,8 @@ class CategoriesController extends Controller
             'user_id' => Auth::id()
         ]);
 
+        Log::info(Auth::user()->login.' отредактировал тему "'.$category->title.'" ('.$category->id.')');
+
         return redirect()->route('home', $category->id);
     }
 
@@ -99,6 +104,8 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        Log::info(Auth::user()->login.' удалил тему "'.$category->title.'" ('.$category->id.')');
+
         $category->questions()->delete();
         $category->delete();
         return redirect()->route('home');

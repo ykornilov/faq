@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthorsController extends Controller
 {
@@ -75,6 +77,8 @@ class AuthorsController extends Controller
         ]);
 
         $author->update($request->all());
+
+        Log::info(Auth::user()->login.' отредактировал автора ('.$author->id.')');
 
         return redirect()->route('home');
 
