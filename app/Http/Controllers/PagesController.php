@@ -12,22 +12,10 @@ class PagesController extends Controller
     public function index($id = null)
     {
         $categories = Category::orderBy('id')->get();
-
-        $activeCategory = null;
-        if ($id !== null) {
-            foreach ($categories as $category) {
-                if ($category->id === (int)$id) {
-                    $activeCategory = $category;
-                    break;
-                }
-            }
-        } elseif ($categories->count() > 0) {
-            $activeCategory = $categories[0];
+        if (is_null($id) && $categories->count() > 0) {
+            $id = $categories[0]->id;
         }
-
-        if ($activeCategory === null) {
-            abort(404);
-        }
+        $activeCategory = Category::findOrFail($id);
 
         return view('home', compact('categories', 'activeCategory'));
     }

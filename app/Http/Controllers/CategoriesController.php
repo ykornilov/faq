@@ -106,7 +106,6 @@ class CategoriesController extends Controller
     {
         Log::info(Auth::user()->login.' удалил тему "'.$category->title.'" ('.$category->id.')');
 
-        $category->questions()->delete();
         $category->delete();
         return redirect()->route('home');
     }

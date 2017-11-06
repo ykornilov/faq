@@ -79,7 +79,7 @@
                                                     <form class="inline-form" action="{{ route('questions.publish', $question->id) }}" method="POST">
                                                         {{ csrf_field() }}
                                                         {{ method_field('PUT') }}
-                                                        <button type="submit" name="publish" class="btn btn-primary" value="@if($question->is_published){{ 'unpublish' }}@else{{ 'publish' }}@endif">@if($question->is_published){{ 'Unpublish' }}@else{{ 'Publish' }}@endif</button>
+                                                        <button type="submit" name="publish" class="btn btn-primary" value="{{!$question->is_published}}">@if($question->is_published){{ 'Unpublish' }}@else{{ 'Publish' }}@endif</button>
                                                     </form>
                                                 @endif
 

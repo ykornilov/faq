@@ -112,15 +112,11 @@ class QuestionsController extends Controller
     {
         $question = Question::where('id', $id)->first();
 
-        $this->validate($request, [
-            'publish' => 'required'
-        ]);
-
         $question->update([
-            'is_published' => ($request->publish === 'publish')
+            'is_published' => (int)$request->publish
         ]);
 
-        Log::info(Auth::user()->login.($request->publish === 'publish' ? ' опубликовал' : ' снял с публикации').'  вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
+        Log::info(Auth::user()->login.($request->publish ? ' опубликовал' : ' снял с публикации').'  вопрос ('.$question->id.') из темы "'.$question->category->title.'" ('.$question->category->id.')');
 
         return redirect()->route('home', $question->category->id);
     }
@@ -158,7 +154,6 @@ class QuestionsController extends Controller
 
         return redirect()->route('home', $question->category->id);
     }
-
 
     /**
      * Remove the specified resource from storage.

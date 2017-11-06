@@ -22,6 +22,10 @@ class CreateQuestionsTable extends Migration
             $table->integer('category_id');
             $table->integer('author_id');
             $table->timestamps();
+
+            $table->foreign('category_id')
+                ->references('id')->on('categories')
+                ->onDelete('cascade');
         });
     }
 
