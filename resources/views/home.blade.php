@@ -14,7 +14,7 @@
                             {{ $category->title }}
                             @auth
                                 <span class="badge badge-danger" data-toggle="tooltip" title="Questons without answer">{{ $category->questions()->whereNull('answer')->get()->count() }}</span>
-                                <span class="badge badge-warning" data-toggle="tooltip" title="Unpublished questions">{{ $category->questions()->where('is_published', false)->get()->count() }}</span>
+                                <span class="badge badge-warning" data-toggle="tooltip" title="Unpublished questions">{{ $category->questions()->whereNotNull('answer')->where('is_published', false)->get()->count() }}</span>
                                 <span class="badge" data-toggle="tooltip" title="Questions">{{ $category->questions->count() }}</span>
                             @endauth
                         </a>
