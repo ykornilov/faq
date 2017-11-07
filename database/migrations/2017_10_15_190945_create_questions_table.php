@@ -14,12 +14,13 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('question');
             $table->text('answer')->nullable();
             $table->boolean('is_published')->default(false);
             $table->boolean('is_blocked')->default(false);
-            $table->integer('category_id');
+            $table->integer('category_id')->unsigned();
             $table->integer('author_id');
             $table->timestamps();
 

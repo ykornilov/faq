@@ -49,14 +49,15 @@
 - Установить laravel
     ```composer global require "laravel/installer"```
 - Склонировать проект из репозитория Github
-    ```git clone https://github.com/ykornilov/faq```
+    ```git clone https://github.com/ykornilov/faq.git```
 - Перейти в директорию проекта
 - Обновить проект laravel
     ```composer update --no-scripts``` 
 - Добавить в MySQL базу данных и пользователя, и внести соответсвующие записи в файл .env (на базе файла .env.example)
+- Изменить значение поля APP_NAME в файле .env с Laravel на FAQ
 - Сгенерировать ключ
     ```php artisan key:generate```
-- Отредактировать AppServiceProvider:
+- Проверить app/Providers/AppServiceProvider:
     ```use Illuminate\Support\Facades\Schema;
     
     /**
@@ -67,8 +68,8 @@
     public function boot()
     {
         Schema::defaultStringLength(191);
-    }```
-
+    }
+    ```
 - Выполнить миграции:
     ```php artisan migrate```
 - Инициализировать администратора
