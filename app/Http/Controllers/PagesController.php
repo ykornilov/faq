@@ -12,10 +12,8 @@ class PagesController extends Controller
     public function index($id = null)
     {
         $categories = Category::orderBy('id')->get();
-        if (is_null($id) && $categories->count() > 0) {
-            $id = $categories[0]->id;
-        }
-        $activeCategory = Category::findOrFail($id);
+        $id = is_null($id) && $categories->count() ? $categories[0]->id : $id;
+        !is_null($id) && $activeCategory = Category::findOrFail($id);
 
         return view('home', compact('categories', 'activeCategory'));
     }
